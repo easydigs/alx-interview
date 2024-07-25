@@ -10,7 +10,6 @@ Returns:
     Returns an empty list if n <= 0.
 """
 
-
 def pascal_triangle(n):
 
     if n <= 0:
