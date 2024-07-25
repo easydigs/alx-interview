@@ -11,6 +11,9 @@ Returns:
 """
 
 def pascal_triangle(n):
+    """
+    Generate Pascal's triangle up to the nth row.
+    """
 
     if n <= 0:
         return []
