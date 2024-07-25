@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """
-n (int): The number of rows in Pascal's triangle.
+n: The number of rows in Pascal's triangle.
 Return: A list of integers representing the Pascal Triangle
         of n returns empty list if n <= 0
 """
+
 
 def pascal_triangle(n):
 
