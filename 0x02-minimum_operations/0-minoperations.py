@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-""" Minimum Operations """
+"""
+n: int The target number of H characters to generate.
+Returns: Minimum number of operations needed to get exactly n 'H' characters
+"""
 
 
 def minOperations(n: int) -> int:
