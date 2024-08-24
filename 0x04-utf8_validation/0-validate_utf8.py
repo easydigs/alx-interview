@@ -3,6 +3,7 @@
 Method that determines if a given data set represents a valid UTF-8 encoding
 """
 
+
 def get_leading_set_bits(num):
     """Returns the number of leading set bits (1)."""
     set_bits = 0
