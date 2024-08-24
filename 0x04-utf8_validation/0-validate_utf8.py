@@ -7,15 +7,15 @@ method that determines if a given data set represents a valid UTF-8 encoding
 def validUTF8(data):
     def is_start_byte(byte):
         """Determine if a byte is a valid start of a multi-byte character."""
-        if byte >> 7 == 0b0:  # 1-byte character (0xxxxxxx)
+        if byte >> 7 == 0b0:
             return 0
-        elif byte >> 5 == 0b110:  # 2-byte character (110xxxxx)
+        elif byte >> 5 == 0b110:
             return 1
-        elif byte >> 4 == 0b1110:  # 3-byte character (1110xxxx)
+        elif byte >> 4 == 0b1110:
             return 2
-        elif byte >> 3 == 0b11110:  # 4-byte character (11110xxx)
+        elif byte >> 3 == 0b11110:
             return 3
-        return -1  # Invalid start byte
+        return -1
 
     def is_continuation_byte(byte):
         """Check if the byte is a valid continuation byte (10xxxxxx)."""
@@ -25,9 +25,11 @@ def validUTF8(data):
     n = len(data)
 
     while i < n:
-        start_byte = data[i]
-        num_bytes = is_start_byte(start_byte)
+        byte = data[i]
+        if byte < 0 or byte > 255:
+            return False
 
+        num_bytes = is_start_byte(byte)
         if num_bytes == -1:
             return False
 
