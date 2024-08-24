@@ -1,42 +1,32 @@
 #!/usr/bin/python3
-"""
-method that determines if a given data set represents a valid UTF-8 encoding
-"""
+"""UTF-8 Validation"""
+
+
+def get_leading_set_bits(num):
+    """returns the number of leading set bits (1)"""
+    set_bits = 0
+    helper = 1 << 7
+    while helper & num:
+        set_bits += 1
+        helper = helper >> 1
+    return set_bits
 
 
 def validUTF8(data):
-    def is_start_byte(byte):
-        """Determine if a byte is a valid start of a multi-byte character."""
-        if byte >> 7 == 0b0:
-            return 0
-        elif byte >> 5 == 0b110:
-            return 1
-        elif byte >> 4 == 0b1110:
-            return 2
-        elif byte >> 3 == 0b11110:
-            return 3
-        return -1
-
-    def is_continuation_byte(byte):
-        """Check if the byte is a valid continuation byte (10xxxxxx)."""
-        return byte >> 6 == 0b10
-
-    i = 0
-    n = len(data)
-
-    while i < n:
-        byte = data[i]
-        if byte < 0 or byte > 255:
-            return False
-
-        num_bytes = is_start_byte(byte)
-        if num_bytes == -1:
-            return False
-
-        for j in range(1, num_bytes + 1):
-            if i + j >= n or not is_continuation_byte(data[i + j]):
+    """determines if a given data set represents a valid UTF-8 encoding"""
+    bits_count = 0
+    for i in range(len(data)):
+        if bits_count == 0:
+            bits_count = get_leading_set_bits(data[i])
+            '''1-byte (format: 0xxxxxxx)'''
+            if bits_count == 0:
+                continue
+            '''a character in UTF-8 can be 1 to 4 bytes long'''
+            if bits_count == 1 or bits_count > 4:
                 return False
-
-        i += num_bytes + 1
-
-    return True
+        else:
+            '''checks if current byte has format 10xxxxxx'''
+            if not (data[i] & (1 << 7) and not (data[i] & (1 << 6))):
+                return False
+        bits_count -= 1
+    return bits_count == 0
