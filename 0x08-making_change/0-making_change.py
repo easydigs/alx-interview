@@ -7,6 +7,7 @@ Args:
     total ([int]): [total amount needed]
 """
 
+
 def makeChange(coins, total):
     if total <= 0:
         return 0
